@@ -23,8 +23,10 @@ import {
   BasicGaugeChart,
   BasicRichText,
   BasicScatterChart,
+  CardGridChart,
   ClusterBarChart,
   ClusterColumnChart,
+  CustomerScorecard,
   CustomerTableChart,
   DoughnutChart,
   LineChart,
@@ -109,7 +111,9 @@ class ChartManager {
 
   private _basicCharts(): IChart[] {
     return [
+      new CardGridChart(),
       new CustomerTableChart(),
+      new CustomerScorecard(),
       new MingXiTableChart(),
       new PivotSheetChart(),
       new Scorecard(),

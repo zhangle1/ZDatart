@@ -297,6 +297,12 @@ const config: ChartConfig = {
       comType: 'group',
       rows: [
         {
+          label: 'style.showRowBottom',
+          key: 'showRowBottom',
+          default: true,
+          comType: 'checkbox',
+        },
+        {
           label: 'style.oddFontColor',
           key: 'oddFontColor',
           default: '#000',
@@ -522,6 +528,7 @@ const config: ChartConfig = {
           tableSize: '表格大小',
           tableHeaderStyle: '表头样式',
           tableBodyStyle: '表体样式',
+          showRowBottom: '表体行显示',
           bgColor: '背景颜色',
           font: '字体',
           align: '对齐方式',

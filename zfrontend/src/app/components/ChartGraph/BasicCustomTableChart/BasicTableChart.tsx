@@ -308,10 +308,22 @@ class BasicCustomTableChart extends ReactChart {
     styles: ChartStyleConfig[],
     settingConfigs: ChartStyleConfig[],
   ): TableStyle {
-    const [oddBgColor, oddFontColor, evenBgColor, evenFontColor] = getStyles(
+    const [
+      oddBgColor,
+      oddFontColor,
+      evenBgColor,
+      evenFontColor,
+      showRowBottom,
+    ] = getStyles(
       styles,
       ['tableBodyStyle'],
-      ['oddBgColor', 'oddFontColor', 'evenBgColor', 'evenFontColor'],
+      [
+        'oddBgColor',
+        'oddFontColor',
+        'evenBgColor',
+        'evenFontColor',
+        'showRowBottom',
+      ],
     );
     const [rightFixedColumns] = getStyles(
       styles,
@@ -334,6 +346,7 @@ class BasicCustomTableChart extends ReactChart {
       },
       isFixedColumns: rightFixedColumns ? true : false,
       summaryStyle: Object.assign({ backgroundColor }, summaryFont),
+      rowBottomShow: showRowBottom,
     };
   }
 
@@ -1102,11 +1115,11 @@ class BasicCustomTableChart extends ReactChart {
       ['font'],
     );
 
-   const [showTitle] =getStyles(
-     styleConfigs || [],
-     ['tableHeaderStyle'],
-     ['showTitle'],
-   )
+    const [showTitle] = getStyles(
+      styleConfigs || [],
+      ['tableHeaderStyle'],
+      ['showTitle'],
+    );
 
     const [summaryFont] = getStyles(
       settingConfigs || [],
@@ -1156,7 +1169,6 @@ class BasicCustomTableChart extends ReactChart {
       bordered: !!showTableBorder,
       size: tableSize || 'default',
       showHeader: !!showTitle,
-
     };
   }
 

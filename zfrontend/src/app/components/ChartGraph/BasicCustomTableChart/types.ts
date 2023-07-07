@@ -5,6 +5,7 @@ export interface TableStyle {
   odd: { backgroundColor: string; color: string };
   even: { backgroundColor: string; color: string };
   isFixedColumns: boolean;
+  rowBottomShow: boolean;
   summaryStyle: { backgroundColor: string } & FontStyle;
 }
 

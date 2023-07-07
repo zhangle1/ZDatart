@@ -30,6 +30,7 @@ interface TableStyleConfigProps {
     color: string;
   };
   isFixedColumns?: boolean;
+  rowBottomShow?: boolean;
   summaryStyle?: {
     backgroundColor?: string;
     fontFamily?: string;
@@ -95,10 +96,10 @@ const StyledTable = styled(Table)<{ tableStyleConfig?: TableStyleConfigProps }>`
     background: inherit;
   }
 
-  /* .ant-table-tbody > tr > td {
-    border-bottom:  none !important
-  } */
-
+  .ant-table-tbody > tr > td {
+    
+    border-bottom: ${p => (p?.tableStyleConfig?.rowBottomShow ? '1px solid' : 'none !important')};
+  }
   .ant-table-summary .ant-table-cell {
     font-family: ${p => p?.tableStyleConfig?.summaryStyle?.fontFamily};
     font-size: ${p => p?.tableStyleConfig?.summaryStyle?.fontSize + 'px'};

@@ -611,6 +611,9 @@
       },
       "data": {
         "column": "列",
+        "item": "内容",
+        "status": "状态",
+        "title": "表头",
         "row": "行",
         "dimension": "维度",
         "metrics": "指标",
@@ -830,6 +833,7 @@
           "roseChart": "玫瑰图",
           "scatterOutlineMap": "气泡轮廓地图",
           "scoreChart": "翻牌器",
+          "customerScoreChart": "自定义翻牌器",
           "stackAreaChart": "堆叠面积图",
           "stackBarChart": "堆叠条形图",
           "stackColumnChart": "堆叠柱状图",
