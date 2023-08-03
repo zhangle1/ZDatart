@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-import { ChartDataSectionType, ChartInteractionEvent } from 'app/constants';
+import { ChartInteractionEvent } from 'app/constants';
 import { ChartSelectionManager } from 'app/models/ChartSelectionManager';
 import ReactChart from 'app/models/ReactChart';
 import { ChartMouseEventParams, ChartsEventData } from 'app/types/Chart';
@@ -38,19 +38,27 @@ import {
 import { CSSProperties } from 'react';
 import { getConditionalStyle } from './conditionalStyle';
 import Config from './config';
-import ScorecardAdapter from './ScorecardAdapter';
-import { LabelConfig, PaddingConfig } from './types';
+import GridCardAdapter from './GridCardAdapter';
+import {
+  CardConfig,
+  GridCardItemData,
+  GridCardItemInfo,
+  LabelConfig,
+  PaddingConfig,
+} from './types';
 
 class CardGrid extends ReactChart {
   chart: any = null;
   isISOContainer = 'react-card-grid';
   config = Config;
   protected isAutoMerge = false;
+  index: number = 0;
   useIFrame = false;
   selectionManager?: ChartSelectionManager;
+  private intervalId: NodeJS.Timeout | null = null;
 
   constructor(props?) {
-    super(ScorecardAdapter, {
+    super(GridCardAdapter, {
       id: props?.id || 'custom-react-grid',
       name: props?.name || 'viz.palette.graph.names.gridCard',
       icon: props?.icon || 'fanpaiqi',
@@ -76,15 +84,48 @@ class CardGrid extends ReactChart {
     this.selectionManager = new ChartSelectionManager(this.mouseEvents);
   }
 
+  public onUnMount(options: BrokerOption, context?: BrokerContext): void {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+    this.adapter?.unmount();
+  }
+
+  rearrangeArrayByIndex<T>(arr: T[][], index: number): T[][] {
+    const len = arr.length;
+    const newIndex = index % len;
+    const newArr = [...arr.slice(newIndex), ...arr.slice(0, newIndex)];
+    return newArr;
+  }
+
   onUpdated(options: BrokerOption, context: BrokerContext) {
     if (!this.isMatchRequirement(options.config)) {
       this.adapter?.unmount();
       return;
     }
+
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+    // options?.dataset?.rows = this.rearrangeArrayByIndex(
+    //   options?.dataset?.rows,
+    //   this.index,
+    // );
     this.adapter?.updated(
       this.getOptions(context, options.dataset!, options.config!),
       context,
     );
+
+    this.intervalId = setInterval(() => {
+      this.index = this.index + 1;
+
+
+      this.adapter?.updated(
+        this.getOptions(context, options.dataset!, options.config!),
+        context,
+      );
+      // console.log("刷新了")
+    }, 3000);
   }
 
   onResize(options: BrokerOption, context: BrokerContext) {
@@ -96,22 +137,56 @@ class CardGrid extends ReactChart {
     dataset: ChartDataSetDTO,
     config: ChartConfig,
   ) {
+    var rows = [] as any;
+    if (dataset != null && dataset.rows != null) {
+      rows = this.rearrangeArrayByIndex<string>(
+        dataset?.rows as any,
+        this.index,
+      );
+    }
     const styleConfigs = config.styles || [];
     const dataConfigs = config.datas || [];
     const aggregateConfigs = dataConfigs
-      .filter(c => c.type === ChartDataSectionType.Mixed)
+      .filter(c => c.key === 'item')
+      // .filter(c => c.type === ChartDataSectionType.Mixed)
+      .flatMap(config => config.rows || []);
+
+    const itemConfigs = dataConfigs
+      .filter(c => c.key === 'item')
+      .flatMap(config => config.rows || []);
+
+    const headerConfigs = dataConfigs
+      .filter(c => c.key === 'title')
+      .flatMap(config => config.rows || []);
+
+    const statusConfig = dataConfigs
+      .filter(c => c.key === 'status')
       .flatMap(config => config.rows || []);
 
     const chartDataSet = transformToDataSet(
-      dataset.rows,
+      rows as string[][],
       dataset.columns,
       dataConfigs,
     );
+
+    const gridCardData = this.getChartData(
+      chartDataSet,
+      itemConfigs,
+      headerConfigs,
+      statusConfig,
+    );
+
+    // console.log("chartDataSet:"+JSON.stringify(dataConfigs))
+
     const { padding, width } = this.getPaddingConfig(
       styleConfigs,
       context.width!,
     );
     const fontSizeFn = this.getFontSize(width, styleConfigs);
+    const rowNumber = this.getRowNumber(styleConfigs)(['data']);
+
+    console.log('rowNumber:' + JSON.stringify(rowNumber));
+
     const aggColorConfig = this.getColorConfig(
       styleConfigs,
       aggregateConfigs,
@@ -123,12 +198,15 @@ class CardGrid extends ReactChart {
       fontSizeFn,
     );
 
-
     const dataConfig = this.getDataConfig(
       aggColorConfig,
       styleConfigs,
       fontSizeFn,
+      rowNumber,
     );
+
+    const cardConfig = this.getCardConfig(rowNumber);
+
     const data: ChartsEventData[] = [
       {
         name: getColumnRenderName(aggregateConfigs[0]),
@@ -144,13 +222,55 @@ class CardGrid extends ReactChart {
         width: context.width,
         height: context.height,
       },
+      cardConfig,
       dataConfig,
       nameConfig,
       padding,
-      data,
+      data: gridCardData,
       background: aggColorConfig?.[0]?.backgroundColor || 'transparent',
       event: data.map((d, i) => this.registerEvents(data[i], i)),
     };
+  }
+  getCardConfig(rowNumber: string | number) {
+    return {
+      rowNumber: rowNumber ?? 6,
+    } as CardConfig;
+  }
+  getChartData(
+    chartDataSet: IChartDataSet<string>,
+    itemConfigs: ChartDataSectionField[],
+    headerConfigs: ChartDataSectionField[],
+    statusConfigs: ChartDataSectionField[],
+  ) {
+    var iteminfoData: GridCardItemInfo[] = new Array<GridCardItemInfo>();
+
+    chartDataSet.forEach(dataSet => {
+      var itemRowData: GridCardItemData[] = new Array<GridCardItemData>();
+      itemConfigs.forEach(item => {
+        itemRowData.push({
+          value: dataSet.getCell(item),
+          name: getColumnRenderName(item),
+        });
+      });
+      var header = { name: '', value: '' } as GridCardItemData;
+      var status = { name: '', value: '' } as GridCardItemData;
+      if (headerConfigs.length > 0) {
+        header.name = getColumnRenderName(headerConfigs[0]);
+        header.value = dataSet.getCell(headerConfigs[0]);
+      }
+      if (statusConfigs.length > 0) {
+        status.name = getColumnRenderName(headerConfigs[0]);
+        status.value = dataSet.getCell(statusConfigs[0]);
+      }
+
+      iteminfoData.push({
+        item: itemRowData,
+        header: header,
+        status: status,
+      });
+    });
+
+    return iteminfoData;
   }
 
   private registerEvents(data: ChartsEventData, index: number) {
@@ -201,7 +321,8 @@ class CardGrid extends ReactChart {
     aggColorConfig: CSSProperties[],
     style: ChartStyleConfig[],
     fontSizeFn: (path: string[]) => string,
-  ): { font: FontStyle }[] {
+    rowNumber: string | number,
+  ): { font: FontStyle; rowNumber: string | number }[] {
     const [font] = getStyles(style, ['data'], ['font']);
     return [
       {
@@ -210,6 +331,7 @@ class CardGrid extends ReactChart {
           ...font,
           color: aggColorConfig?.[0]?.color || font.color,
         },
+        rowNumber: rowNumber,
       },
     ];
   }
@@ -228,6 +350,13 @@ class CardGrid extends ReactChart {
         return Math.floor(width / scale) + 'px';
       }
       return fixedFontSize + 'px';
+    };
+  }
+
+  getRowNumber(style: ChartStyleConfig[]): (path: string[]) => string {
+    return path => {
+      const [rowNumber] = getStyles(style, path, ['rowNumber']);
+      return rowNumber;
     };
   }
 
@@ -289,8 +418,6 @@ class CardGrid extends ReactChart {
       ),
     };
   }
-
-
 }
 
 export default CardGrid;

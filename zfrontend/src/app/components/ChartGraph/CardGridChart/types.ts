@@ -8,8 +8,12 @@ interface FontConfig {
   fontWeight: string;
   lineHeight: number;
 }
+export interface CardConfig {
+  rowNumber: string | number;
+}
 
-export interface ScorecardConfig {
+export interface GridCardConfig {
+  cardConfig: CardConfig;
   dataConfig: FontConfig;
   nameConfig: {
     show: boolean;
@@ -17,7 +21,7 @@ export interface ScorecardConfig {
     position: string;
     alignment: string;
   };
-  suffixConfig:SuffixConfig;
+  suffixConfig: SuffixConfig;
 
   padding: string;
   context: {
@@ -25,10 +29,7 @@ export interface ScorecardConfig {
     height: number;
   };
   width: number;
-  data: {
-    name: string;
-    value: number | string;
-  };
+  data: GridCardItemInfo[];
   background: string;
   event: {
     [eventName: string]: (value: any) => void;
@@ -37,14 +38,17 @@ export interface ScorecardConfig {
 
 export interface CardGridProp {
   padding: string | number;
+  rowNumber: string | number;
 }
 
-export interface CardProp{
+export interface CardProp {}
 
+export interface CardHeaderProp {
+  color: string;
 }
 
-export interface CardHeaderProp{
-  
+export interface CardHeaderRightProp{
+  color: string;
 }
 
 export interface AggregateBoxProp {
@@ -68,4 +72,15 @@ export interface SuffixConfig {
   show: boolean;
   font: FontStyle;
   content: string;
+}
+
+export interface GridCardItemData {
+  name: string;
+  value: string;
+}
+
+export interface GridCardItemInfo {
+  item: GridCardItemData[];
+  header: GridCardItemData;
+  status: GridCardItemData;
 }

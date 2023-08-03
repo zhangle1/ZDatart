@@ -131,75 +131,14 @@ const config: ChartConfig = {
           },
         },
         {
-          label: 'viz.palette.style.font',
-          key: 'font',
-          comType: 'font',
-          default: {
-            fontFamily: FONT_FAMILY,
-            fontWeight: 'normal',
-            fontStyle: 'normal',
-            lineHeight: 1,
-            color: '#495057',
-          },
-          options: {
-            showLineHeight: true,
-            showFontSize: false,
-          },
-        },
-      ],
-    },
-    {
-      label: 'data.suffixTitle',
-      key: 'suffixData',
-      comType: 'group',
-      rows: [
-        {
-          label: 'label.showSuffix',
-          key: 'show',
-          default: true,
-          comType: 'checkbox',
-        },
-        {
-          label: 'common.autoFontSize',
-          key: 'autoFontSize',
-          default: true,
-          comType: 'checkbox',
-        },
-        {
-          label: 'common.scale',
-          key: 'scale',
+          label: 'data.rowNumber',
+          key: 'rowNumber',
           default: 6,
-          comType: 'slider',
-          options: {
-            min: 2,
-            max: 20,
-            dots: false,
-          },
-          watcher: {
-            deps: ['autoFontSize'],
-            action: props => {
-              return {
-                disabled: !props.autoFontSize,
-              };
-            },
-          },
-        },
-        {
-          label: 'common.fixedFontSize',
-          key: 'fixedFontSize',
-          default: 12,
           comType: 'inputNumber',
           options: {
-            min: 12,
+            min: 1,
+            max: 8,
             step: 1,
-          },
-          watcher: {
-            deps: ['autoFontSize'],
-            action: props => {
-              return {
-                disabled: props.autoFontSize,
-              };
-            },
           },
         },
         {
@@ -455,6 +394,7 @@ const config: ChartConfig = {
           dataTitle: '标题',
           status: '状态',
           item: '内容',
+          rowNumber: '行数量',
         },
         conditionalStyle: {
           open: '打开样式设置',

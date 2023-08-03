@@ -274,7 +274,7 @@
                                 <argument>bootstrap</argument>
                                 <argument>--registry=https://registry.npm.taobao.org</argument>
                             </arguments>
-                            <workingDirectory>${project.parent.basedir}/frontend</workingDirectory>
+                            <workingDirectory>${project.parent.basedir}/zfrontend</workingDirectory>
                         </configuration>
                     </execution>
 
@@ -290,7 +290,7 @@
                                 <argument>run</argument>
                                 <argument>build:all</argument>
                             </arguments>
-                            <workingDirectory>${project.parent.basedir}/frontend</workingDirectory>
+                            <workingDirectory>${project.parent.basedir}/zfrontend</workingDirectory>
                         </configuration>
                     </execution>
                 </executions>
@@ -310,7 +310,7 @@
                             <outputDirectory>${project.parent.basedir}/static</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>${project.parent.basedir}/frontend/build</directory>
+                                    <directory>${project.parent.basedir}/zfrontend/build</directory>
                                 </resource>
                             </resources>
                         </configuration>
@@ -330,7 +330,7 @@
                             <goal>rename</goal>
                         </goals>
                         <configuration>
-                            <sourceFile>${project.parent.basedir}/frontend/build/task/index.js</sourceFile>
+                            <sourceFile>${project.parent.basedir}/zfrontend/build/task/index.js</sourceFile>
                             <destinationFile>${project.basedir}/src/main/resources/javascript/parser.js
                             </destinationFile>
                         </configuration>

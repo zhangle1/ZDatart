@@ -5,6 +5,11 @@
     url('iconfont.ttf?t=1661773321580') format('truetype');
 }
 
+@font-face {
+  font-family: 'YouSheBiaoTiHei';
+  src: url('YouSheBiaoTiHei-2.ttf');
+}
+
 .iconfont {
   font-family: 'iconfont' !important;
   font-size: 20px;
