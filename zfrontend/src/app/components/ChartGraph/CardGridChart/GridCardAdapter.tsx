@@ -211,5 +211,4 @@ const CardItemRightContainer = styled.div`
   width: 39%;
   background: url(${eqpSheBei}) center center / 100% 100% no-repeat;
   height: 100px;
-
 `;
