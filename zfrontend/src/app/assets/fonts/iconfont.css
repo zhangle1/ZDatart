@@ -10,6 +10,12 @@
   src: url('YouSheBiaoTiHei-2.ttf');
 }
 
+@font-face {
+  font-family: 'DigitalNumbers';
+  src: url('DigitalNumbers-Regular.woff');
+}
+
+
 .iconfont {
   font-family: 'iconfont' !important;
   font-size: 20px;

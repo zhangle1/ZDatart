@@ -24,6 +24,7 @@ import {
   BasicRichText,
   BasicScatterChart,
   CardGridChart,
+  EqpCardChart,
   ClusterBarChart,
   ClusterColumnChart,
   CustomerScorecard,
@@ -112,6 +113,7 @@ class ChartManager {
   private _basicCharts(): IChart[] {
     return [
       new CardGridChart(),
+      new EqpCardChart(),
       new CustomerTableChart(),
       new CustomerScorecard(),
       new MingXiTableChart(),

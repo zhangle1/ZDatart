@@ -86,6 +86,15 @@ export const FONT_FAMILIES = [
     name: 'viz.palette.style.fontFamily.microsoftYaHei',
     value: 'Microsoft YaHei',
   },
+  {
+    name: 'viz.palette.style.fontFamily.youShe',
+    value: 'YouSheBiaoTiHei-Regular, YouSheBiaoTiHei',
+  },
+  {
+    name: 'viz.palette.style.fontFamily.digitalNumber',
+    value: 'DigitalNumbers',
+  },
+  
   { name: 'viz.palette.style.fontFamily.simSun', value: 'SimSun' },
   { name: 'viz.palette.style.fontFamily.simHei', value: 'SimHei' },
   {

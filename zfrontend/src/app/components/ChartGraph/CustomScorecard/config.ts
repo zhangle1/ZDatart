@@ -34,6 +34,17 @@ const config: ChartConfig = {
       limit: 1,
     },
     {
+      label: 'chain',
+      key: 'chain',
+      required: true,
+      type: 'aggregate',
+      actions: {
+        NUMERIC: ['aggregate', 'alias', 'format', 'sortable'],
+        STRING: ['aggregateLimit', 'alias', 'format', 'sortable'],
+      },
+      limit: 1,
+    },
+    {
       label: 'filter',
       key: 'filter',
       type: 'filter',
@@ -141,6 +152,74 @@ const config: ChartConfig = {
         },
       ],
     },
+
+    {
+      label: 'chain.title',
+      key: 'chain',
+      comType: 'group',
+      rows: [
+        {
+          label: 'common.autoFontSize',
+          key: 'autoFontSize',
+          default: true,
+          comType: 'checkbox',
+        },
+        {
+          label: 'common.scale',
+          key: 'scale',
+          default: 6,
+          comType: 'slider',
+          options: {
+            min: 2,
+            max: 20,
+            dots: false,
+          },
+          watcher: {
+            deps: ['autoFontSize'],
+            action: props => {
+              return {
+                disabled: !props.autoFontSize,
+              };
+            },
+          },
+        },
+        {
+          label: 'common.fixedFontSize',
+          key: 'fixedFontSize',
+          default: 12,
+          comType: 'inputNumber',
+          options: {
+            min: 12,
+            step: 1,
+          },
+          watcher: {
+            deps: ['autoFontSize'],
+            action: props => {
+              return {
+                disabled: props.autoFontSize,
+              };
+            },
+          },
+        },
+        {
+          label: 'viz.palette.style.font',
+          key: 'font',
+          comType: 'font',
+          default: {
+            fontFamily: FONT_FAMILY,
+            fontWeight: 'normal',
+            fontStyle: 'normal',
+            lineHeight: 1,
+            color: '#495057',
+          },
+          options: {
+            showLineHeight: true,
+            showFontSize: false,
+          },
+        },
+      ],
+    },
+
     {
       label: 'data.suffixTitle',
       key: 'suffixData',
@@ -213,8 +292,6 @@ const config: ChartConfig = {
         },
       ],
     },
-
-
     {
       label: 'label.title',
       key: 'label',
@@ -443,8 +520,10 @@ const config: ChartConfig = {
         },
         data: {
           title: '数据',
-          suffixTitle: '后缀'
+          suffixTitle: '后缀',
+          chain: '环比',
         },
+
         conditionalStyle: {
           open: '打开样式设置',
         },

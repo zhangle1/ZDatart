@@ -548,6 +548,8 @@
         "fontFamily": {
           "default": "默认字体",
           "microsoftYaHei": "微软雅黑",
+          "youShe": "优设字体",
+          "digitalNumber": "数字字体",
           "simSun": "宋体",
           "simHei": "黑体",
           "helveticaNeue": "Helvetica Neue",
@@ -612,7 +614,10 @@
       "data": {
         "column": "列",
         "item": "内容",
+        "currentQty": "当前数量",
+        "planQty": "计划数量",
         "status": "状态",
+        "chain": "环比",
         "title": "表头",
         "row": "行",
         "dimension": "维度",
@@ -811,6 +816,7 @@
       },
       "graph": {
         "names": {
+          "gridCard":"卡片布局",
           "table": "表格",
           "customTable": "用户表格",
           "areaChart": "区域图",

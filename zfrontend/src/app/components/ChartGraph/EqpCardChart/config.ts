@@ -46,6 +46,22 @@ const config: ChartConfig = {
         sortable: { backendSort: false },
       },
     },
+    {
+      label: 'currentQty',
+      key: 'cuurentQty',
+      type: 'group',
+      options: {
+        sortable: { backendSort: false },
+      },
+    },
+    {
+      label: 'planQty',
+      key: 'planQty',
+      type: 'group',
+      options: {
+        sortable: { backendSort: false },
+      },
+    },
   ],
   styles: [
     {
@@ -389,13 +405,16 @@ const config: ChartConfig = {
           status: '状态',
           chain: '环比',
           item: '内容',
+          currentQty: '当前数量',
+          planQty: '计划数量',
         },
         data: {
           title: '数据',
           dataTitle: '标题',
           status: '状态',
           chain: '环比',
-
+          currentQty: '当前数量',
+          planQty: '计划数量',
           item: '内容',
           rowNumber: '行数量',
         },
