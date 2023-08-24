@@ -16,8 +16,10 @@
  * limitations under the License.
  */
 
+import { Liquid } from '@ant-design/plots';
 import eqpRunBg from 'app/assets/images/eqp_bg_run.png';
 import eqpRunStandy from 'app/assets/images/eqp_bg_standy.png';
+import Icon from 'app/assets/images/gold_icon.png';
 import { EmptyFiller } from 'app/components/EmptyFiller';
 import { FC, memo } from 'react';
 import styled from 'styled-components/macro';
@@ -47,6 +49,16 @@ const GridCardAdapter: FC<GridCardConfig> = memo(
       }
     }
 
+    const config = {
+      fontSize:'8',
+      percent: 0.7,
+      
+      wave: {
+        length: 128,
+      },
+      // color:'white'
+    };
+
     return data?.length > 0 ? (
       <EqpCard
         rowNumber={cardConfig?.rowNumber ?? 5}
@@ -70,12 +82,16 @@ const GridCardAdapter: FC<GridCardConfig> = memo(
             }
             return (
               <CardItem gridColumn={gridColumn}>
+                <ItemIcon icon={Icon} width={24} height={24}></ItemIcon>
                 <div>{src.name}</div>
-                <div style={{ flex: '1',textAlign:'right' }}>{src.value}</div>
+                <div style={{ flex: '1', textAlign: 'right' }}>{src.value}</div>
               </CardItem>
             );
           })}
         </CardGrid>
+        <CardRow>
+          <Liquid {...config}  width={100} height={80}  ></Liquid>
+        </CardRow>
       </EqpCard>
     ) : (
       <div
@@ -92,6 +108,15 @@ const GridCardAdapter: FC<GridCardConfig> = memo(
   },
 );
 export default GridCardAdapter;
+
+const CardRow = styled.div<{}>`
+  display: flex;
+  height: 105px;
+  width: 100%;
+  /* background: white; */
+  margin-top: 12px;
+  align-items: center;
+`;
 
 const EqpCard = styled.div<CardGridProp>`
   /* display: flex; */
@@ -128,6 +153,17 @@ const CardHeader = styled.div<CardHeaderProp>`
   font-family: YouSheBiaoTiHei-Regular, YouSheBiaoTiHei;
 `;
 
+const ItemIcon = styled.div<{
+  icon: any;
+  width: any;
+  height: any;
+}>`
+  background: url(${p => p.icon}) center center / 100% 100% no-repeat;
+  width: ${p => p.width}px;
+  height: ${p => p.height}px;
+  margin-right: 12px;
+`;
+
 const CardGrid = styled.div<{}>`
   width: 100%;
   min-width: 0;
@@ -151,4 +187,5 @@ const CardItem = styled.div<{ gridColumn: string }>`
   align-items: center;
   padding-left: 12px;
   padding-right: 12px;
+  font-family: YouSheBiaoTiHei-Regular, YouSheBiaoTiHei;
 `;

@@ -90,6 +90,7 @@
     }
   },
   "dependencies": {
+    "@ant-design/charts": "^1.4.2",
     "@ant-design/icons": "^4.5.0",
     "@ant-design/pro-table": "2.60.1",
     "@antv/s2": "1.19.0",
