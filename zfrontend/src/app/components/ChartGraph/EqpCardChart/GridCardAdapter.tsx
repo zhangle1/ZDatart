@@ -15,8 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-import { Liquid } from '@ant-design/plots';
+import { Liquid, Progress } from '@ant-design/plots';
 import eqpRunBg from 'app/assets/images/eqp_bg_run.png';
 import eqpRunStandy from 'app/assets/images/eqp_bg_standy.png';
 import Icon from 'app/assets/images/gold_icon.png';
@@ -40,24 +39,47 @@ const GridCardAdapter: FC<GridCardConfig> = memo(
       e.stopPropagation();
     };
     var existItem = data?.[0];
-    var color = '#2EB2FD';
+    var color = '#078CFF';
     var icon = eqpRunBg;
+
+    var config = {
+      fontSize: '8',
+      percent: 0.7,
+
+      wave: {
+        length: 38,
+      },
+      // color:'white'
+    };
+    var processConfig = {
+      height: 50,
+      // width: 100,
+      autoFit: true,
+      percent: 0.7,
+      color: ['#078CFF', '#E8EDF3'],
+    };
+    // var config = ;
+
     if (existItem) {
       if (existItem.status.value !== '运行') {
         color = '#FD962E ';
         icon = eqpRunStandy;
       }
-    }
+      if (Number(existItem.planQty?.value) > 0) {
+        config.percent =
+          Number(existItem.currentQty?.value) /
+          1.0 /
+          Number(existItem.planQty?.value);
 
-    const config = {
-      fontSize:'8',
-      percent: 0.7,
-      
-      wave: {
-        length: 128,
-      },
-      // color:'white'
-    };
+        processConfig.percent =
+          Number(existItem.currentQty?.value) /
+          1.0 /
+          Number(existItem.planQty?.value);
+      } else {
+        config.percent = 0;
+        processConfig.percent = 0;
+      }
+    }
 
     return data?.length > 0 ? (
       <EqpCard
@@ -90,7 +112,38 @@ const GridCardAdapter: FC<GridCardConfig> = memo(
           })}
         </CardGrid>
         <CardRow>
-          <Liquid {...config}  width={100} height={80}  ></Liquid>
+          <Liquid
+            {...config}
+            width={100}
+            height={80}
+            color={'#078CFF'}
+            // label={{style:{fill:'white'}}}
+            theme={'light'}
+            statistic={{
+              content: { style: { color: 'white', fontSize: '22' } },
+            }}
+          ></Liquid>
+          <div
+            style={{
+              flex: '1',
+              display: 'flex',
+              flexDirection: 'column',
+              color: 'white',
+              fontFamily: 'YouSheBiaoTiHei-Regular, YouSheBiaoTiHei',
+              fontSize: '22px',
+              justifyContent:'start',
+              height: '100%',
+            }}
+          >
+            <div style={{ display: 'flex'  }}>完成数量</div>
+            <Progress {...processConfig}></Progress>
+            <div style={{ display: 'flex',width:'100%', justifyContent:'space-between'  }}>
+              <div>计划数量:{existItem.planQty?.value}</div>
+              <div>完成数量:{existItem.currentQty?.value}</div>
+
+            </div>
+
+          </div>
         </CardRow>
       </EqpCard>
     ) : (
@@ -111,7 +164,7 @@ export default GridCardAdapter;
 
 const CardRow = styled.div<{}>`
   display: flex;
-  height: 105px;
+  height: 120px;
   width: 100%;
   /* background: white; */
   margin-top: 12px;

@@ -48,7 +48,7 @@ const config: ChartConfig = {
     },
     {
       label: 'currentQty',
-      key: 'cuurentQty',
+      key: 'currentQty',
       type: 'group',
       options: {
         sortable: { backendSort: false },
