@@ -88,6 +88,10 @@ class BasicCustomTableChart extends ReactChart {
     total: 0,
   };
 
+  private intervalId: NodeJS.Timeout | null = null;
+  index: number = 0;
+
+
   constructor(props?) {
     super(AntdTableWrapper, {
       id: props?.id || 'react-table',
@@ -125,6 +129,12 @@ class BasicCustomTableChart extends ReactChart {
       this.adapter?.unmount();
       return;
     }
+
+
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+
     this.selectionManager?.updateSelectedItems(options?.selectedItems);
     Debugger.instance.measure(
       'Table OnUpdate cost ---> ',
@@ -143,6 +153,18 @@ class BasicCustomTableChart extends ReactChart {
       },
       false,
     );
+
+    this.intervalId = setInterval(() => {
+      this.index = this.index + 1;
+
+
+      this.adapter?.updated(
+        this.getOptions(context, options.dataset!, options.config!),
+        context,
+      );
+      // console.log("刷新了")
+    }, 3000);
+
   }
 
   public onUnMount(options: BrokerOption, context: BrokerContext) {
@@ -171,7 +193,19 @@ class BasicCustomTableChart extends ReactChart {
       { columns },
     );
     this.adapter?.updated(tableOptions, context);
+
+
+
+    
   }
+
+  rearrangeArrayByIndex<T>(arr: T[][], index: number): T[][] {
+    const len = arr.length;
+    const newIndex = index % len;
+    const newArr = [...arr.slice(newIndex), ...arr.slice(0, newIndex)];
+    return newArr;
+  }
+
 
   protected getOptions(
     context: BrokerContext,
@@ -186,8 +220,17 @@ class BasicCustomTableChart extends ReactChart {
     const dataConfigs = config.datas || [];
     const styleConfigs = config.styles || [];
     const settingConfigs = config.settings || [];
+
+    var rows :string[][]|undefined ;
+    if (dataset != null && dataset.rows != null) {
+      rows = this.rearrangeArrayByIndex<string>(
+        dataset?.rows as any,
+        this.index,
+      );
+    }
+
     const chartDataSet = transformToDataSet(
-      dataset.rows,
+      rows,
       dataset.columns,
       dataConfigs,
     );
