@@ -104,6 +104,12 @@ const config: ChartConfig = {
       comType: 'group',
       rows: [
         {
+          label: 'common.qtyShow',
+          key: 'qtyShow',
+          default: true,
+          comType: 'checkbox',
+        },
+        {
           label: 'common.autoFontSize',
           key: 'autoFontSize',
           default: true,
@@ -386,6 +392,7 @@ const config: ChartConfig = {
       translation: {
         common: {
           autoFontSize: '自动调节文字大小',
+          qtyShow: '显示计划实际数量',
           scale: '比例',
           fixedFontSize: '文字大小',
           position: '位置',

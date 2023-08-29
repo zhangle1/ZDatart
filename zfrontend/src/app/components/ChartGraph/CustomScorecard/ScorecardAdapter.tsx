@@ -74,7 +74,7 @@ const ScorecardAdapter: FC<ScorecardConfig> = memo(
             </ValueBox>
           </ValueWrapper>
 
-          <ValueWrapper>
+          {/* <ValueWrapper>
             <ValueBox
               style={{
                 ...chainConfig?.[0].font,
@@ -99,7 +99,7 @@ const ScorecardAdapter: FC<ScorecardConfig> = memo(
                 height: chainConfig?.[0].font.fontSize,
               }}
             ></div>
-          </ValueWrapper>
+          </ValueWrapper> */}
         </AggregateBox>
       </ScorecardBox>
     );

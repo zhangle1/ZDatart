@@ -88,13 +88,13 @@ const StyledTable = styled(Table)<{ tableStyleConfig?: TableStyleConfigProps }>`
   }
   .ant-table-body {
     overflow: ${p =>
-      p?.tableStyleConfig?.isFixedColumns ? 'auto scroll' : 'auto !important'};
+      p?.tableStyleConfig?.isFixedColumns ? 'hidden' : 'hidden'};
   }
 
   .ant-table .ant-table-container .ant-table-body .ant-table-tbody td {
     background: inherit;
+    overflow: hidden;
   }
-
 
   .ant-table-summary .ant-table-cell {
     font-family: ${p => p?.tableStyleConfig?.summaryStyle?.fontFamily};

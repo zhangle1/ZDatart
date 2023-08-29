@@ -34,6 +34,7 @@ const GridCardAdapter: FC<GridCardConfig> = memo(
     event,
     suffixConfig,
     cardConfig,
+    qtyShow,
   }) => {
     const ssp = e => {
       e.stopPropagation();
@@ -89,7 +90,7 @@ const GridCardAdapter: FC<GridCardConfig> = memo(
         style={{ background }}
       >
         <CardHeader color="blue" icon={icon}>
-          <div>{existItem.header.value}</div>
+          <div style={{ width: '80%' }}>{existItem.header.value}</div>
           <div style={{ color: color }}>{existItem.status.value}</div>
         </CardHeader>
         <CardGrid>
@@ -111,40 +112,48 @@ const GridCardAdapter: FC<GridCardConfig> = memo(
             );
           })}
         </CardGrid>
-        <CardRow>
-          <Liquid
-            {...config}
-            width={100}
-            height={80}
-            color={'#078CFF'}
-            // label={{style:{fill:'white'}}}
-            theme={'light'}
-            statistic={{
-              content: { style: { color: 'white', fontSize: '22' } },
-            }}
-          ></Liquid>
-          <div
-            style={{
-              flex: '1',
-              display: 'flex',
-              flexDirection: 'column',
-              color: 'white',
-              fontFamily: 'YouSheBiaoTiHei-Regular, YouSheBiaoTiHei',
-              fontSize: '22px',
-              justifyContent:'start',
-              height: '100%',
-            }}
-          >
-            <div style={{ display: 'flex'  }}>完成数量</div>
-            <Progress {...processConfig}></Progress>
-            <div style={{ display: 'flex',width:'100%', justifyContent:'space-between'  }}>
-              <div>计划数量:{existItem.planQty?.value}</div>
-              <div>完成数量:{existItem.currentQty?.value}</div>
-
+        {qtyShow ? (
+          <CardRow>
+            <Liquid
+              {...config}
+              width={100}
+              height={80}
+              color={'#078CFF'}
+              // label={{style:{fill:'white'}}}
+              theme={'light'}
+              statistic={{
+                content: { style: { color: 'white', fontSize: '22' } },
+              }}
+            ></Liquid>
+            <div
+              style={{
+                flex: '1',
+                display: 'flex',
+                flexDirection: 'column',
+                color: 'white',
+                fontFamily: 'YouSheBiaoTiHei-Regular, YouSheBiaoTiHei',
+                fontSize: '22px',
+                justifyContent: 'start',
+                height: '100%',
+              }}
+            >
+              <div style={{ display: 'flex' }}>完成数量</div>
+              <Progress {...processConfig}></Progress>
+              <div
+                style={{
+                  display: 'flex',
+                  width: '100%',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <div>计划数量:{existItem.planQty?.value}</div>
+                <div>完成数量:{existItem.currentQty?.value}</div>
+              </div>
             </div>
-
-          </div>
-        </CardRow>
+          </CardRow>
+        ) : (
+          <></>
+        )}
       </EqpCard>
     ) : (
       <div
@@ -192,7 +201,7 @@ const CardHeader = styled.div<CardHeaderProp>`
   display: flex;
   width: 100%;
   /* height: 20px; */
-  font-size: 23px;
+  font-size: 15px;
   color: white;
   align-items: center;
   background: url(${p => p.icon}) center center / 100% 100% no-repeat;
