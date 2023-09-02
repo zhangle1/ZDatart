@@ -88,6 +88,9 @@ class BasicCustomTableChart extends ReactChart {
     total: 0,
   };
 
+  private intervalId: NodeJS.Timeout | null = null;
+  index: number = 0;
+
   constructor(props?) {
     super(AntdTableWrapper, {
       id: props?.id || 'react-table',
@@ -125,6 +128,8 @@ class BasicCustomTableChart extends ReactChart {
       this.adapter?.unmount();
       return;
     }
+
+  
     this.selectionManager?.updateSelectedItems(options?.selectedItems);
     Debugger.instance.measure(
       'Table OnUpdate cost ---> ',
@@ -143,9 +148,26 @@ class BasicCustomTableChart extends ReactChart {
       },
       false,
     );
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+
+    this.intervalId = setInterval(() => {
+      this.index = this.index + 1;
+      
+      this.adapter?.updated(
+        this.getOptions(context, options.dataset!, options.config!),
+        context,
+      );
+      // console.log("刷新了")
+    }, 3000);
   }
 
   public onUnMount(options: BrokerOption, context: BrokerContext) {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+
     this.cachedAntTableOptions = {};
     this.cachedDatartConfig = {};
     this.cacheContext = null;
@@ -173,6 +195,13 @@ class BasicCustomTableChart extends ReactChart {
     this.adapter?.updated(tableOptions, context);
   }
 
+  rearrangeArrayByIndex<T>(arr: T[][], index: number): T[][] {
+    const len = arr.length;
+    const newIndex = index % len;
+    const newArr = [...arr.slice(newIndex), ...arr.slice(0, newIndex)];
+    return newArr;
+  }
+
   protected getOptions(
     context: BrokerContext,
     dataset?: ChartDataSetDTO,
@@ -186,11 +215,16 @@ class BasicCustomTableChart extends ReactChart {
     const dataConfigs = config.datas || [];
     const styleConfigs = config.styles || [];
     const settingConfigs = config.settings || [];
-    const chartDataSet = transformToDataSet(
-      dataset.rows,
-      dataset.columns,
-      dataConfigs,
-    );
+
+    var rows: string[][] | undefined;
+    if (dataset != null && dataset.rows != null) {
+      rows = this.rearrangeArrayByIndex<string>(
+        dataset?.rows as any,
+        this.index,
+      );
+    }
+
+    const chartDataSet = transformToDataSet(rows, dataset.columns, dataConfigs);
 
     const mixedSectionConfigRows = dataConfigs
       .filter(c => c.key === 'mixed')
@@ -221,6 +255,55 @@ class BasicCustomTableChart extends ReactChart {
       chartDataSet,
       context,
     );
+    console.log(
+      'tableObject:' +
+        JSON.stringify({
+          rowKey: 'id',
+          pagination: tablePagination,
+          dataSource: chartDataSet,
+          columns: tableColumns,
+          summaryFn: this.getTableSummaryFn(
+            settingConfigs,
+            chartDataSet,
+            tableColumns,
+            aggregateConfigs,
+            context,
+          ),
+          // showHeader:false,
+          onRow: (_, index) => {
+            const row = chartDataSet?.[index];
+            const rowData = row?.convertToCaseSensitiveObject();
+            return { index, rowData };
+          },
+          components: this.getTableComponents(
+            styleConfigs,
+            widgetSpecialConfig,
+            mixedSectionConfigRows,
+          ),
+          ...this.getAntdTableStyleOptions(
+            styleConfigs,
+            settingConfigs,
+            context,
+          ),
+          onChange: (pagination, filters, sorter, extra) => {
+            if (extra?.action === 'sort' || extra?.action === 'paginate') {
+              this.invokePagingRelatedEvents(
+                sorter?.column?.colName,
+                sorter?.order,
+                pagination?.current,
+                sorter?.column?.aggregate,
+              );
+            }
+          },
+          rowClassName: (_, index) => {
+            return index % 2 === 0
+              ? 'datart-basic-table-odd'
+              : 'datart-basic-table-even';
+          },
+          tableStyleConfig: this.getTableStyle(styleConfigs, settingConfigs),
+        }),
+    );
+
     return {
       rowKey: 'id',
       pagination: tablePagination,
@@ -290,7 +373,14 @@ class BasicCustomTableChart extends ReactChart {
       context,
       settingConfigs,
     );
-    this.totalWidth = Object.values<any>(this.dataColumnWidths).reduce(
+
+    let customeWidths = mixedSectionConfigRows.map(src => {
+      return {
+        columnWidthValue: context.width / mixedSectionConfigRows.length ?? 0,
+      };
+    });
+
+    this.totalWidth = Object.values<any>(customeWidths).reduce(
       (a, b) => a + (b.columnWidthValue || 0),
       0,
     );

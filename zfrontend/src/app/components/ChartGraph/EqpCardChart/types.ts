@@ -29,6 +29,7 @@ export interface GridCardConfig {
     height: number;
   };
   width: number;
+  qtyShow?: boolean;
   data: GridCardItemInfo[];
   background: string;
   event: {

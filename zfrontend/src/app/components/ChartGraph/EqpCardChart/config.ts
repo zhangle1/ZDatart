@@ -48,7 +48,7 @@ const config: ChartConfig = {
     },
     {
       label: 'currentQty',
-      key: 'cuurentQty',
+      key: 'currentQty',
       type: 'group',
       options: {
         sortable: { backendSort: false },
@@ -103,6 +103,12 @@ const config: ChartConfig = {
       key: 'data',
       comType: 'group',
       rows: [
+        {
+          label: 'common.qtyShow',
+          key: 'qtyShow',
+          default: true,
+          comType: 'checkbox',
+        },
         {
           label: 'common.autoFontSize',
           key: 'autoFontSize',
@@ -386,6 +392,7 @@ const config: ChartConfig = {
       translation: {
         common: {
           autoFontSize: '自动调节文字大小',
+          qtyShow: '显示计划实际数量',
           scale: '比例',
           fixedFontSize: '文字大小',
           position: '位置',

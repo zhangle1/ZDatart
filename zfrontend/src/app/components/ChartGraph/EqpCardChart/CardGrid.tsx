@@ -193,8 +193,7 @@ class CardGrid extends ReactChart {
     );
     const fontSizeFn = this.getFontSize(width, styleConfigs);
     const rowNumber = this.getRowNumber(styleConfigs)(['data']);
-
-    console.log('rowNumber:' + JSON.stringify(rowNumber));
+    const qtyShow = this.getQtyShow(styleConfigs)(['data']);
 
     const aggColorConfig = this.getColorConfig(
       styleConfigs,
@@ -236,6 +235,7 @@ class CardGrid extends ReactChart {
       nameConfig,
       padding,
       data: gridCardData,
+      qtyShow: qtyShow,
       background: aggColorConfig?.[0]?.backgroundColor || 'transparent',
       event: data.map((d, i) => this.registerEvents(data[i], i)),
     };
@@ -359,6 +359,12 @@ class CardGrid extends ReactChart {
     ];
   }
 
+  getQtyShow(style: ChartStyleConfig[]): (path: string[]) => string {
+    return path => {
+      const [qtyShow] = getStyles(style, path, ['qtyShow']);
+      return qtyShow;
+    };
+  }
   getFontSize(
     width: number,
     style: ChartStyleConfig[],
