@@ -98,7 +98,7 @@ const GridCardAdapter: FC<GridCardConfig> = memo(
         style={{
           display: 'flex',
           justifyContent: 'center',
-          alignItems: 'center',
+          alignItems: 'center', 
           height: '100%',
         }}
       >
