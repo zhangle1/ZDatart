@@ -80,41 +80,85 @@ const AntdTableWrapper: FC<{
   },
 );
 
+// const StyledTable = styled(Table)<{ tableStyleConfig?: TableStyleConfigProps }>`
+//   height: 100%;
+//   /* overflow: auto; */
+//   overflow: hidden;
+
+//   .ant-table-body::-webkit-scrollbar {
+//     width: 0px;
+//     height: 10px;
+//     /**/
+//   }
+//   .ant-table-body::-webkit-scrollbar-track {
+//     border-radius: 2px;
+//   }
+//   .ant-table-body::-webkit-scrollbar-thumb {
+//     border-radius: 10px;
+//   }
+//   .ant-table-body::-webkit-scrollbar-thumb:hover {
+//     background: #333;
+//   }
+//   .ant-table-body::-webkit-scrollbar-corner {
+//     background: #179a16;
+//   }
+
+//   .ant-table {
+//     background: transparent;
+//   }
+//   .ant-table-body {
+//     /* overflow: 'hidden'; */
+//     /* background: transparent; */
+//     background: black;
+//     overflow: ${p =>
+//       p?.tableStyleConfig?.isFixedColumns ? 'auto scroll' : 'auto !important'};
+//   }
+
+//   .ant-table .ant-table-container .ant-table-body .ant-table-tbody td {
+//     background: inherit;
+//     overflow: hidden;
+//   }
+
+//   .ant-table-tbody > tr > td {
+//     border-bottom: ${p =>
+//       p?.tableStyleConfig?.rowBottomShow ? '1px solid' : 'none !important'};
+//   }
+//   .ant-table-summary .ant-table-cell {
+//     font-family: ${p => p?.tableStyleConfig?.summaryStyle?.fontFamily};
+//     font-size: ${p => p?.tableStyleConfig?.summaryStyle?.fontSize + 'px'};
+//     font-style: ${p => p?.tableStyleConfig?.summaryStyle?.fontStyle};
+//     font-weight: ${p => p?.tableStyleConfig?.summaryStyle?.fontWeight};
+//     color: ${p => p?.tableStyleConfig?.summaryStyle?.color};
+//     /* background-color: ${p =>
+//       p?.tableStyleConfig?.summaryStyle?.backgroundColor}; */
+//   }
+
+//   .ant-table .ant-table-container .ant-table-body .datart-basic-table-odd {
+//     color: ${p => p?.tableStyleConfig?.odd?.color || 'inherit'};
+//     background: ${p =>
+//       p?.tableStyleConfig?.odd?.backgroundColor || 'transparent'};
+//   }
+
+//   .ant-table .ant-table-container .ant-table-body .datart-basic-table-even {
+//     color: ${p => p?.tableStyleConfig?.even?.color || 'inherit'};
+//     background: ${p =>
+//       p?.tableStyleConfig?.even?.backgroundColor || 'transparent'};
+//   }
+//   .ant-table-tbody {
+//     overflow-y: 'hidden';
+//   }
+// `;
+
 const StyledTable = styled(Table)<{ tableStyleConfig?: TableStyleConfigProps }>`
   height: 100%;
-  /* overflow: auto; */
-  overflow: hidden;
-
-  .ant-table-body::-webkit-scrollbar {
-    width: 0px;
-    height: 10px;
-    /**/
-  }
-  .ant-table-body::-webkit-scrollbar-track {
-    background: rgb(239, 239, 239);
-    border-radius: 2px;
-  }
-  .ant-table-body::-webkit-scrollbar-thumb {
-    background: #bfbfbf;
-    border-radius: 10px;
-  }
-  .ant-table-body::-webkit-scrollbar-thumb:hover {
-    background: #333;
-  }
-  .ant-table-body::-webkit-scrollbar-corner {
-    background: #179a16;
-  }
+  overflow: auto;
 
   .ant-table {
     background: transparent;
-    overflow: hidden;
   }
   .ant-table-body {
-    overflow: 'hidden';
-    /* overflow: ${p =>
-      p?.tableStyleConfig?.isFixedColumns
-        ? 'auto scroll'
-        : 'auto !important'}; */
+    overflow: ${p =>
+      p?.tableStyleConfig?.isFixedColumns ? 'hidden' : 'hidden'};
   }
 
   .ant-table .ant-table-container .ant-table-body .ant-table-tbody td {
@@ -122,10 +166,6 @@ const StyledTable = styled(Table)<{ tableStyleConfig?: TableStyleConfigProps }>`
     overflow: hidden;
   }
 
-  .ant-table-tbody > tr > td {
-    border-bottom: ${p =>
-      p?.tableStyleConfig?.rowBottomShow ? '1px solid' : 'none !important'};
-  }
   .ant-table-summary .ant-table-cell {
     font-family: ${p => p?.tableStyleConfig?.summaryStyle?.fontFamily};
     font-size: ${p => p?.tableStyleConfig?.summaryStyle?.fontSize + 'px'};
@@ -147,9 +187,13 @@ const StyledTable = styled(Table)<{ tableStyleConfig?: TableStyleConfigProps }>`
     background: ${p =>
       p?.tableStyleConfig?.even?.backgroundColor || 'transparent'};
   }
-  .ant-table-tbody {
-    overflow-y: 'hidden';
+
+  .ant-table-body::-webkit-scrollbar {
+    width: 0px;
+    height: 10px;
+    /**/
   }
+
 `;
 
 export default AntdTableWrapper;

@@ -16,10 +16,15 @@
  * limitations under the License.
  */
 
-import eqpSheBei from 'app/assets/images/eqp_shebei.png';
 import eqpHeader from 'app/assets/images/gold_header.png';
 import eqpHeaderIcon from 'app/assets/images/gold_icon.png';
 import eqpItemBack from 'app/assets/images/gold_item_back.png';
+import pingmian from 'app/assets/images/平面磨床.png';
+import pingmian2 from 'app/assets/images/平面磨床2.png';
+import dakongjiicon from 'app/assets/images/打孔机.png';
+import xiemianicon from 'app/assets/images/斜面磨床.png';
+import goudaoicon from 'app/assets/images/沟道磨床.png';
+import jingjiagongicon from 'app/assets/images/精加工设备.png';
 import { FC, memo } from 'react';
 import styled from 'styled-components/macro';
 import {
@@ -60,6 +65,92 @@ const GridCardAdapter: FC<GridCardConfig> = memo(
           if (src.status.value === '待机') {
             color = '#FFAA00';
           }
+          var Icon = goudaoicon;
+          if (
+            src?.header?.value?.indexOf('210301') !== -1 ||
+            src?.header?.value?.indexOf('210302') !== -1 ||
+            src?.header?.value?.indexOf('210403') !== -1 ||
+            src?.header?.value?.indexOf('210404') !== -1 ||
+            src?.header?.value?.indexOf('210405') !== -1 ||
+            src?.header?.value?.indexOf('210406') !== -1 ||
+            src?.header?.value?.indexOf('210407') !== -1
+          ) {
+            Icon = pingmian;
+          }
+
+          if (
+            src?.header?.value?.indexOf('220301') !== -1 ||
+            src?.header?.value?.indexOf('220302') !== -1 ||
+            src?.header?.value?.indexOf('220303') !== -1 ||
+            src?.header?.value?.indexOf('220304') !== -1
+          ) {
+            Icon = pingmian2;
+          }
+
+          if (
+            src?.header?.value?.indexOf('220229') !== -1 ||
+            src?.header?.value?.indexOf('220230') !== -1 ||
+            src?.header?.value?.indexOf('220204') !== -1 ||
+            src?.header?.value?.indexOf('220205') !== -1 ||
+            src?.header?.value?.indexOf('220206') !== -1 ||
+            src?.header?.value?.indexOf('220207') !== -1 ||
+            src?.header?.value?.indexOf('220202') !== -1 ||
+            src?.header?.value?.indexOf('220203') !== -1 ||
+            src?.header?.value?.indexOf('220208') !== -1 ||
+            src?.header?.value?.indexOf('220209') !== -1 ||
+            src?.header?.value?.indexOf('220231') !== -1 ||
+            src?.header?.value?.indexOf('220232') !== -1 ||
+            src?.header?.value?.indexOf('220233') !== -1 ||
+            src?.header?.value?.indexOf('220234') !== -1 ||
+            src?.header?.value?.indexOf('220235') !== -1 ||
+            src?.header?.value?.indexOf('220236') !== -1 ||
+            src?.header?.value?.indexOf('220210') !== -1 ||
+            src?.header?.value?.indexOf('220211') !== -1 ||
+            src?.header?.value?.indexOf('220212') !== -1 ||
+            src?.header?.value?.indexOf('220213') !== -1 ||
+            src?.header?.value?.indexOf('220214') !== -1 ||
+            src?.header?.value?.indexOf('220215') !== -1 ||
+            src?.header?.value?.indexOf('220216') !== -1 ||
+            src?.header?.value?.indexOf('220217') !== -1 ||
+            src?.header?.value?.indexOf('220218') !== -1 ||
+            src?.header?.value?.indexOf('220219') !== -1 ||
+            src?.header?.value?.indexOf('220220') !== -1 ||
+            src?.header?.value?.indexOf('220221') !== -1 ||
+            src?.header?.value?.indexOf('220222') !== -1 ||
+            src?.header?.value?.indexOf('220223') !== -1 ||
+            src?.header?.value?.indexOf('220224') !== -1 ||
+            src?.header?.value?.indexOf('220225') !== -1 ||
+            src?.header?.value?.indexOf('220226') !== -1 ||
+            src?.header?.value?.indexOf('220227') !== -1 ||
+            src?.header?.value?.indexOf('220228') !== -1
+          ) {
+            Icon = jingjiagongicon;
+          }
+          if (
+            src?.header?.value?.indexOf('210101') !== -1 ||
+            src?.header?.value?.indexOf('210102') !== -1 ||
+            src?.header?.value?.indexOf('210103') !== -1 ||
+            src?.header?.value?.indexOf('210104') !== -1 ||
+            src?.header?.value?.indexOf('210105') !== -1 ||
+            src?.header?.value?.indexOf('210106') !== -1 ||
+            src?.header?.value?.indexOf('210107') !== -1 ||
+            src?.header?.value?.indexOf('210108') !== -1 ||
+            src?.header?.value?.indexOf('210109') !== -1 ||
+            src?.header?.value?.indexOf('210110') !== -1 ||
+            src?.header?.value?.indexOf('210111') !== -1 ||
+            src?.header?.value?.indexOf('210112') !== -1
+          ) {
+            Icon = dakongjiicon;
+          }
+
+          if (
+            src?.header?.value?.indexOf('斜面磨床') !== -1 ||
+            src?.header?.value?.indexOf('210303') !== -1 ||
+            src?.header?.value?.indexOf('210304') !== -1
+          ) {
+            Icon = xiemianicon;
+          }
+
           return (
             <Card>
               <CardHeader color={color}>
@@ -84,7 +175,7 @@ const GridCardAdapter: FC<GridCardConfig> = memo(
                     );
                   })}
                 </CardItemLeftContainer>
-                <CardItemRightContainer></CardItemRightContainer>
+                <CardItemRightContainer icon={Icon}></CardItemRightContainer>
               </CardItemContainer>
             </Card>
           );
@@ -207,8 +298,8 @@ const CardItemLeftContainer = styled.div`
   width: 60%;
 `;
 
-const CardItemRightContainer = styled.div`
+const CardItemRightContainer = styled.div<{ icon: any }>`
   width: 39%;
-  background: url(${eqpSheBei}) center center / 100% 100% no-repeat;
+  background: url(${p => p.icon}) center center / 100% 100% no-repeat;
   height: 100px;
 `;
