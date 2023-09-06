@@ -19,6 +19,8 @@
 import eqpHeader from 'app/assets/images/gold_header.png';
 import eqpHeaderIcon from 'app/assets/images/gold_icon.png';
 import eqpItemBack from 'app/assets/images/gold_item_back.png';
+import eqpTitleLeftIcon from 'app/assets/images/icon_left.png';
+import eqpTitleRightIcon from 'app/assets/images/icon_right.png';
 import pingmian from 'app/assets/images/平面磨床.png';
 import pingmian2 from 'app/assets/images/平面磨床2.png';
 import dakongjiicon from 'app/assets/images/打孔机.png';
@@ -160,9 +162,12 @@ const GridCardAdapter: FC<GridCardConfig> = memo(
                     style={{ marginLeft: '8px' }}
                   >{`${src.header.value}`}</div>
                 </CardHeaderLeftTitle>
+                <CardTitleLeftIcon></CardTitleLeftIcon>
                 <CardHeaderRight
                   color={color}
                 >{`${src.status.value}`}</CardHeaderRight>
+
+                <CardTitleRightIcon></CardTitleRightIcon>
               </CardHeader>
               <CardItemContainer>
                 <CardItemLeftContainer>
@@ -255,6 +260,17 @@ const CardLeftIcon = styled.div`
   height: 20px;
 `;
 
+const CardTitleLeftIcon = styled.div`
+  background: url(${eqpTitleLeftIcon}) center center / 100% 100% no-repeat;
+  width: 20px;
+  height: 20px;
+`;
+const CardTitleRightIcon = styled.div`
+  background: url(${eqpTitleRightIcon}) center center / 100% 100% no-repeat;
+  width: 20px;
+  height: 20px;
+`;
+
 const CardHeaderRight = styled.div<CardHeaderRightProp>`
   background: rgba(0, 255, 76, 0.1);
   border-radius: 12px;
@@ -269,6 +285,9 @@ const CardHeaderRight = styled.div<CardHeaderRightProp>`
     p.color != null ? `1px solid ${p.color}` : '1px solid #00ff4c'};
   background-color: ${p => (p.color != null ? p.color + '44' : '#45b97c44')};
   font-family: YouSheBiaoTiHei-Regular, YouSheBiaoTiHei;
+
+  margin-left: 12px;
+  margin-right: 12px;
 `;
 
 const CardItem = styled.div`
