@@ -217,8 +217,12 @@ const Card = styled.div<CardProp>`
   /* border-radius: 20px; */
   /* border: 5px solid white; */
   /* border-style: 'solid'; */
-  background-color: black;
-  padding-bottom: 8px;
+  /* background-color: black; */
+  background: url(${eqpHeaderIcon}) center center / 100% 100% no-repeat;
+  padding-top: 12px;
+  padding-bottom: 20px;
+  padding-left: 12px;
+  padding-right: 12px;
 `;
 
 const CardHeader = styled.div<CardHeaderProp>`
