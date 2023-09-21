@@ -15,7 +15,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 import eqpHeader from 'app/assets/images/gold_header.png';
 import eqpHeaderIcon from 'app/assets/images/gold_icon.png';
 import eqpItemBack from 'app/assets/images/gold_item_back.png';
@@ -27,6 +26,7 @@ import dakongjiicon from 'app/assets/images/打孔机.png';
 import xiemianicon from 'app/assets/images/斜面磨床.png';
 import goudaoicon from 'app/assets/images/沟道磨床.png';
 import jingjiagongicon from 'app/assets/images/精加工设备.png';
+import { getBackgroundImage } from 'app/pages/DashBoardPage/utils';
 import { FC, memo } from 'react';
 import styled from 'styled-components/macro';
 import {
@@ -47,6 +47,7 @@ const GridCardAdapter: FC<GridCardConfig> = memo(
     event,
     suffixConfig,
     cardConfig,
+    bg,
   }) => {
     const ssp = e => {
       e.stopPropagation();
@@ -154,7 +155,7 @@ const GridCardAdapter: FC<GridCardConfig> = memo(
           }
 
           return (
-            <Card>
+            <Card bg={bg}>
               <CardHeader color={color}>
                 <CardHeaderLeftTitle>
                   <CardLeftIcon></CardLeftIcon>
@@ -173,7 +174,7 @@ const GridCardAdapter: FC<GridCardConfig> = memo(
                 <CardItemLeftContainer>
                   {src.item.map(item => {
                     return (
-                      <CardItem>
+                      <CardItem style={dataConfig?.[0].font}>
                         <CardItemLeftTitle>{item.name}</CardItemLeftTitle>
                         <CardItemRight>{item.value}</CardItemRight>
                       </CardItem>
@@ -223,10 +224,13 @@ const Card = styled.div<CardProp>`
   /* border: 5px solid white; */
   /* border-style: 'solid'; */
   /* background-color: black; */
-  background: url(${eqpHeaderIcon}) center center / 100% 100% no-repeat;
+  /* background: url(${eqpHeaderIcon}) center center / 100% 100% no-repeat; */
   padding-top: 12px;
   padding-bottom: 20px;
   padding-left: 12px;
+  background: ${p => getBackgroundImage(p.bg?.image)} center center / 100% 100% no-repeat;
+
+  background-color: ${p => p.bg?.color};
   padding-right: 12px;
 `;
 

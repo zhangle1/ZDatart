@@ -17,8 +17,9 @@
  */
 
 import { ChartConfig } from 'app/types/ChartConfig';
-import { FONT_FAMILY } from 'styles/StyleConstants';
+import { FONT_FAMILY, WHITE } from 'styles/StyleConstants';
 import { getColumnRenderName } from '../../../utils/chartHelper';
+import { initBackgroundTpl } from 'app/pages/DashBoardPage/components/WidgetManager/utils/init';
 
 const config: ChartConfig = {
   datas: [
@@ -82,6 +83,7 @@ const config: ChartConfig = {
         },
       ],
     },
+    initBackgroundTpl(WHITE),
     {
       label: 'data.title',
       key: 'data',

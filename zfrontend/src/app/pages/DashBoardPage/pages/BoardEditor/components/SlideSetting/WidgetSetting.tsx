@@ -50,6 +50,7 @@ export const WidgetSetting: FC<{ boardId?: string }> = memo(({ boardId }) => {
     {},
   );
 
+
   const handleStyleConfigChange = (
     ancestors: number[],
     configItem: ChartStyleConfig,
@@ -114,6 +115,7 @@ export const WidgetSetting: FC<{ boardId?: string }> = memo(({ boardId }) => {
       return interactions;
     });
   };
+  console.log("配置项目:"+JSON.stringify(widget.config.customConfig))
 
   return (
     <StyledWidgetSetting

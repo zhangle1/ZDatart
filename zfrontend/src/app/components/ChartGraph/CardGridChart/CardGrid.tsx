@@ -19,6 +19,7 @@
 import { ChartInteractionEvent } from 'app/constants';
 import { ChartSelectionManager } from 'app/models/ChartSelectionManager';
 import ReactChart from 'app/models/ReactChart';
+import { BackgroundConfig } from 'app/pages/DashBoardPage/pages/Board/slice/types';
 import { ChartMouseEventParams, ChartsEventData } from 'app/types/Chart';
 import {
   ChartConfig,
@@ -119,7 +120,6 @@ class CardGrid extends ReactChart {
     this.intervalId = setInterval(() => {
       this.index = this.index + 1;
 
-
       this.adapter?.updated(
         this.getOptions(context, options.dataset!, options.config!),
         context,
@@ -186,6 +186,7 @@ class CardGrid extends ReactChart {
     const rowNumber = this.getRowNumber(styleConfigs)(['data']);
 
     console.log('rowNumber:' + JSON.stringify(rowNumber));
+    console.log('styleConfigs:' + JSON.stringify(styleConfigs));
 
     const aggColorConfig = this.getColorConfig(
       styleConfigs,
@@ -197,6 +198,8 @@ class CardGrid extends ReactChart {
       styleConfigs,
       fontSizeFn,
     );
+
+    const Bg = this.getBgConfig(styleConfigs);
 
     const dataConfig = this.getDataConfig(
       aggColorConfig,
@@ -229,6 +232,7 @@ class CardGrid extends ReactChart {
       data: gridCardData,
       background: aggColorConfig?.[0]?.backgroundColor || 'transparent',
       event: data.map((d, i) => this.registerEvents(data[i], i)),
+      bg: Bg,
     };
   }
   getCardConfig(rowNumber: string | number) {
@@ -380,6 +384,12 @@ class CardGrid extends ReactChart {
       position,
       alignment,
     };
+  }
+
+  getBgConfig(style: ChartStyleConfig[]): BackgroundConfig {
+    const [background] = getStyles(style, ['backgroundGroup'], ['background']);
+
+    return { ...background } as any;
   }
 
   getPaddingConfig(

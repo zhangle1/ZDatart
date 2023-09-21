@@ -1,3 +1,4 @@
+import { BackgroundConfig } from 'app/pages/DashBoardPage/pages/Board/slice/types';
 import { FontStyle } from '../../../types/ChartConfig';
 
 interface FontConfig {
@@ -15,6 +16,7 @@ export interface CardConfig {
 export interface GridCardConfig {
   cardConfig: CardConfig;
   dataConfig: FontConfig;
+  bg: BackgroundConfig;
   nameConfig: {
     show: boolean;
     font: FontConfig;
@@ -41,7 +43,9 @@ export interface CardGridProp {
   rowNumber: string | number;
 }
 
-export interface CardProp {}
+export interface CardProp {
+  bg: any
+}
 
 export interface CardHeaderProp {
   color: string;
