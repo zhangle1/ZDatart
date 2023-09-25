@@ -45,12 +45,14 @@ import {
   StackColumnChart,
   WaterfallChart,
   WordCloudChart,
+  CustomEqpScorecardOne,
 } from 'app/components/ChartGraph';
 import { IChart } from 'app/types/Chart';
 import { getChartPluginPaths } from 'app/utils/fetch';
 import { Debugger } from 'utils/debugger';
 import { CloneValueDeep } from 'utils/object';
 import PluginChartLoader from './PluginChartLoader';
+import CustomRadarChart from 'app/components/ChartGraph/CustomRadarChart';
 
 class ChartManager {
   private _loader = new PluginChartLoader();
@@ -112,10 +114,13 @@ class ChartManager {
 
   private _basicCharts(): IChart[] {
     return [
+      new CustomRadarChart(),
       new CardGridChart(),
       new EqpCardChart(),
       new CustomerTableChart(),
       new CustomerScorecard(),
+      new CustomEqpScorecardOne(),
+
       new MingXiTableChart(),
       new PivotSheetChart(),
       new Scorecard(),

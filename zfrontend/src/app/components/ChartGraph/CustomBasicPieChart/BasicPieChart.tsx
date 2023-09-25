@@ -104,6 +104,8 @@ class BasicPieChart extends Chart {
       options.drillOption,
       options.selectedItems,
     );
+
+    console.log('newOptions:' + JSON.stringify(newOptions));
     this.chart?.setOption(Object.assign({}, newOptions), true);
   }
 
@@ -149,6 +151,8 @@ class BasicPieChart extends Chart {
       infoConfigs,
       selectedItems,
     );
+    console.log('selectedItems:' + JSON.stringify(selectedItems));
+    console.log('chartDataSet:' + JSON.stringify(chartDataSet));
 
     return {
       tooltip: {
@@ -159,6 +163,30 @@ class BasicPieChart extends Chart {
           chartDataSet,
         ),
       },
+      radar: {
+        axisName: {
+          fontSize: 14,
+          color: '#6D7278',
+        },
+        axisLine: {
+          lineStyle: {
+            color: '#ebeef3',
+          },
+        },
+        shape: 'circle',
+        center: ['50%', '50%'],
+        radius: '70%',
+        triggerEvent: false,
+        indicator: chartDataSet?.map((row, dcIndex) => {
+          return {
+            ...config,
+            name: groupConfigs.map(row.getCell, row).join('-'),
+            min: 0,
+            max: 200,
+          };
+        }),
+      },
+      color: ['#5189F8'],
       legend: this.getLegendStyle(groupConfigs, styleConfigs, series),
       series,
     };
@@ -171,7 +199,7 @@ class BasicPieChart extends Chart {
     aggregateConfigs: ChartDataSectionField[],
     infoConfigs: ChartDataSectionField[],
     selectedItems?: SelectedItem[],
-  ): PieSeriesStyle[] | PieSeriesStyle {
+  ): PieSeriesStyle[] | PieSeriesStyle|any {
     if (!groupConfigs?.length) {
       const row = chartDataSet?.[0];
       return {
@@ -200,21 +228,12 @@ class BasicPieChart extends Chart {
       return {
         ...this.getPieSeriesImpl(styleConfigs),
         name: getColumnRenderName(config),
-        data: chartDataSet?.map((row, dcIndex) => {
-          return {
-            ...config,
-            name: groupConfigs.map(row.getCell, row).join('-'),
-            value: aggregateConfigs.concat(infoConfigs).map(row.getCell, row),
-            ...getSelectedItemStyles(
-              acIndex,
-              dcIndex,
-              selectedItems || [],
-              this.getDataItemStyle(config, groupConfigs, row),
-            ),
-            ...getExtraSeriesRowData(row),
-            ...getExtraSeriesDataFormat(config?.format),
-          };
-        }),
+        data: [{
+          value:chartDataSet?.map((row, dcIndex) => {
+            return row[1];
+          }),
+          name: getColumnRenderName(config),
+        }],
       };
     });
     return flatSeries;
@@ -245,10 +264,10 @@ class BasicPieChart extends Chart {
 
   private getPieSeriesImpl(styleConfigs: ChartStyleConfig[]): PieSeriesImpl {
     return {
-      type: 'pie',
+      type: 'radar',
       sampling: 'average',
       avoidLabelOverlap: false,
-      ...this.getLabelStyle(styleConfigs),
+      // ...this.getLabelStyle(styleConfigs),
       ...this.getSeriesStyle(styleConfigs),
       ...getGridStyle(styleConfigs),
     };
@@ -396,7 +415,7 @@ class BasicPieChart extends Chart {
       (!this.isCircle && !this.isRose) || (!this.isCircle && this.isRose)
         ? `70%`
         : ['50%', '70%'];
-    return { radius: radiusValue, roseType: this.isRose,  };
+    return { radius: radiusValue, roseType: false };
   }
 
   private getTooltipFormatterFunc(

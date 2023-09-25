@@ -28,6 +28,8 @@ export const WidgetTitle: FC<{
   }
   return (
     <StyledWrap conf={title}>
+      <Divder height={'40px'} color={'#507afd'}></Divder>
+
       <NameWrap className="widget-name" conf={title}>
         {title.title}
       </NameWrap>
@@ -36,6 +38,9 @@ export const WidgetTitle: FC<{
 });
 
 const StyledWrap = styled.div<{ conf: WidgetTitleConfig }>`
+  display: flex;
+  justify-content: start;
+  align-items: center;
   width: 100%;
   line-height: 24px;
   text-align: ${p => p.conf.textAlign};
@@ -48,4 +53,16 @@ const NameWrap = styled.span<{ conf: WidgetTitleConfig }>`
   font-weight: ${p => p.conf.font.fontWeight};
   color: ${p => p.conf.font.color};
   text-align: ${p => p.conf.textAlign};
+  margin-left: 12px;
+`;
+
+const Divder = styled.div<{
+  height?: any;
+  color?: any;
+}>`
+  margin-left: 8px;
+  width: 5px;
+  height: ${p => p.height};
+  background-color: ${p => p.color};
+  border-radius: 5px;
 `;

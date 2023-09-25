@@ -47,6 +47,10 @@ export { default as ClusterColumnChart } from './ClusterColumnChart';
 
 export { default as CustomerScorecard } from './CustomScorecard';
 
+
+export { default as CustomEqpScorecardOne } from './CustomEqpScorecardOne';
+
+
 export { default as CustomerTableChart } from './CustomTableChart';
 
 export { default as DoughnutChart } from './DoughnutChart';
