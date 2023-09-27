@@ -141,7 +141,12 @@ const GridCardAdapter: FC<GridCardConfig> = memo(
             src?.header?.value?.indexOf('210109') !== -1 ||
             src?.header?.value?.indexOf('210110') !== -1 ||
             src?.header?.value?.indexOf('210111') !== -1 ||
-            src?.header?.value?.indexOf('210112') !== -1
+            src?.header?.value?.indexOf('210112') !== -1 ||
+            src?.header?.value?.indexOf('210305') !== -1 ||
+            src?.header?.value?.indexOf('210409') !== -1 ||
+            src?.header?.value?.indexOf('210410') !== -1 ||
+            src?.header?.value?.indexOf('210411') !== -1 ||
+            src?.header?.value?.indexOf('210412') !== -1 
           ) {
             Icon = dakongjiicon;
           }
