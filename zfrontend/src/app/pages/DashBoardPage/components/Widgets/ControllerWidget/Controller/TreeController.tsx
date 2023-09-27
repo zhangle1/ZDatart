@@ -18,7 +18,7 @@
 import { Form, Tree, TreeSelect } from 'antd';
 import useI18NPrefix from 'app/hooks/useI18NPrefix';
 import { RelationFilterValue } from 'app/types/ChartConfig';
-import React, { memo, useCallback } from 'react';
+import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components/macro';
 
 export interface TreeControllerFormProps {
@@ -56,7 +56,42 @@ export const TreeSelectController: React.FC<TreeControllerFormProps> = memo(
       [onChange],
     );
 
+    const divRef = useRef(null);
+    const [height, setHeight] = useState(0);
+    useEffect(() => {
+      const resizeObserver = new ResizeObserver(entries => {
+        for (let entry of entries) {
+          const { height } = entry.contentRect;
+          console.log("Div height changed:", height);
+          // 处理高度变化逻辑
+          setHeight(height)
+        }
+      });
+  
+      if (divRef.current) {
+        resizeObserver.observe(divRef.current);
+      }
+  
+      return () => {
+        resizeObserver.disconnect();
+      };
+    }, []);
+  
+
     return (
+    //   <div style={{ height: '100%' }} ref={divRef}>
+    //   <Tree
+    //   checkedKeys={value}
+    //   onCheck={handleonChange}
+    //   checkable
+    //   checkStrictly
+    //   style={{overflowY: 'auto'}}
+    //   titleRender={node => {
+    //     return node.title || node.key;
+    //   }}
+    //   treeData={treeData}
+    // />
+    // </div>
       <StyledTreeSelect
         allowClear
         value={value}

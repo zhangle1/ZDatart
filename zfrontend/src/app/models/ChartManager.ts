@@ -53,6 +53,7 @@ import { Debugger } from 'utils/debugger';
 import { CloneValueDeep } from 'utils/object';
 import PluginChartLoader from './PluginChartLoader';
 import CustomRadarChart from 'app/components/ChartGraph/CustomRadarChart';
+import CustomEqpScorecardTwo from 'app/components/ChartGraph/CustomEqpScorecardTwo';
 
 class ChartManager {
   private _loader = new PluginChartLoader();
@@ -120,6 +121,7 @@ class ChartManager {
       new CustomerTableChart(),
       new CustomerScorecard(),
       new CustomEqpScorecardOne(),
+      new CustomEqpScorecardTwo(),
 
       new MingXiTableChart(),
       new PivotSheetChart(),
