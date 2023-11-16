@@ -255,6 +255,11 @@ export type MediaWidgetContent = {
   richTextConfig?: {
     content: DeltaStatic;
   };
+  borderConfig?: {
+    type: number | undefined;
+    firstColor: string | undefined;
+    secondColor: string | undefined;
+  };
   timerConfig?: {
     time: {
       timeDuration: number; // 定时器刷新时间
@@ -335,6 +340,7 @@ export declare const MediaWidgetTypes: [
   'image',
   'video',
   'iframe',
+  'border',
 ];
 
 export type MediaWidgetType = typeof MediaWidgetTypes[number];

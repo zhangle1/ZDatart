@@ -47,6 +47,12 @@ export const AddMedia: React.FC<{}> = () => {
     type: LightWidgetType;
   };
   const mediaWidgetTypes: TinyWidgetItems[] = [
+    
+    {
+      name: '边框组件',
+      icon: '',
+      type: 'border',
+    },
     {
       name: t('image'),
       icon: '',
@@ -71,7 +77,7 @@ export const AddMedia: React.FC<{}> = () => {
       name: t('video'),
       icon: '',
       type: 'video',
-    },
+    }
   ];
   const mediaWidgetItems = (
     <Menu onClick={onSelectMediaWidget}>

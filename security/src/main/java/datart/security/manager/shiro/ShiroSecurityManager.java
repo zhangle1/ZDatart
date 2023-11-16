@@ -49,7 +49,8 @@ import java.util.*;
 
 
 @Slf4j
-@Component(value = "datartSecurityManager")
+//@Component(value = "datartSecurityManager")
+@Component
 public class ShiroSecurityManager implements DatartSecurityManager {
 
     final MessageResolver messageResolver;

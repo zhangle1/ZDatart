@@ -35,6 +35,7 @@ import imageProto from '../Widgets/ImageWidget/imageConfig';
 import queryBtnProto from '../Widgets/QueryBtnWidget/queryBtnConfig';
 import resetBtnProto from '../Widgets/ResetBtnWidget/resetBtnConfig';
 import richTextProto from '../Widgets/RichTextWidget/richTextConfig';
+import borderTextProto from '../Widgets/BorderWidget2//richTextConfig';
 import tabProto from '../Widgets/TabWidget/tabConfig';
 import timerProto from '../Widgets/TimerWidget/timerConfig';
 import videoProto from '../Widgets/VideoWidget/videoConfig';
@@ -63,6 +64,7 @@ const protoList: WidgetProto[] = [
   valueProto,
   sliderProto,
   groupProto, //   group
+  borderTextProto,
 ];
 
 protoList.forEach(item => {
